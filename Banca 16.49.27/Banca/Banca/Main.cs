@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http.Headers;
+using System.Reflection.Emit;
 
 namespace Banca
 {
@@ -16,8 +17,10 @@ namespace Banca
             {
                 Console.WriteLine("Scegli un'opzione:");
                 Console.WriteLine("1 -Crea un nuovo contro corrente");
-                Console.WriteLine("2 -Visualizza il tuo conto corrente ");
-                Console.WriteLine("3 -Esci");
+                Console.WriteLine("2 -Visualizza il tuo conto corrente");
+                Console.WriteLine("3 -Elimina il tuo conto corrente");
+                Console.WriteLine("4 -Effettua un versamento o un prelievo");
+                Console.WriteLine("5 -Esci");
                 Console.WriteLine("");
                 scelta = Convert.ToInt16(Console.ReadLine());
                 Console.WriteLine("");
@@ -119,9 +122,102 @@ namespace Banca
                             Console.WriteLine("");
                         }
                         break;
+
+                    case 3:
+                        {
+                            string iban = "";
+                            string conferma = "";
+
+                            Console.WriteLine("Immeti il tuo codice iban:");
+                            iban = Console.ReadLine();
+                            Console.WriteLine("");
+
+                            Console.WriteLine("Sei sicuro di volere eliminare il tuo conto corrente?");
+                            Console.WriteLine("SI/NO");
+                            conferma = Console.ReadLine().ToLower();
+                            Console.WriteLine("");
+
+                            if (conferma == "si")
+                            {
+                                if (BCC.Remove(iban) == true)
+                                {
+                                    Console.WriteLine("Il tuo conto corrente è stato eliminato");
+                                    Console.WriteLine("");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Si è verificato un errore,");
+                                    Console.WriteLine("controlla che il codice iban sia corretto e riprova");
+                                    Console.WriteLine("");
+                                }
+                            }
+
+
+
+                        }
+                        break;
+
+                    case 4:
+                        {
+                            string scelta2 = "";
+                            do
+                            {
+                                string iban = "";
+                                double somma = 0;
+
+                                Console.WriteLine("Vuoi effettuare un versamento(A) o un prelievo(B) ?");
+                                Console.WriteLine("Se vuoi uscire digita C:");
+                                scelta2 = Console.ReadLine().ToLower();
+                                Console.WriteLine("");
+
+                                if (scelta2 == "c")
+                                { }
+                                else
+                                        {
+                                            Console.WriteLine("Immetti il tuo codice iban:");
+                                            iban = Console.ReadLine();
+                                        Console.WriteLine("");
+                                        }
+                                
+
+                                switch (scelta2)
+                                {
+                                    case "a":
+                                        {
+                                            Console.WriteLine("Inserisci la somma da versare:");
+                                            somma = Convert.ToDouble(Console.ReadLine());
+                                            Console.WriteLine("");
+                                            BCC.GetContocorrente(iban).Versamento(somma);
+
+                                            Console.WriteLine("Il saldo attuale è di: " + BCC.GetContocorrente(iban).Saldo());
+                                            Console.WriteLine("");
+                                        }
+                                        break;
+
+                                    case "b":
+                                        {
+                                            Console.WriteLine("Inserisci la somma da prelevare:");
+                                            somma = Convert.ToDouble(Console.ReadLine());
+                                            Console.WriteLine("");
+                                            BCC.GetContocorrente(iban).Prelievo(somma);
+
+                                            Console.WriteLine("Il saldo attuale è di: " + BCC.GetContocorrente(iban).Saldo());
+                                            Console.WriteLine("");
+                                        }
+                                        break;
+
+                                    case "c": break;
+
+                                    default:
+                                        Console.WriteLine("Inserisci una scelta valida.");
+                                        Console.WriteLine(""); break;
+                                }
+                            } while (scelta2 != "c");
+                        }
+                        break;
                 }
             }
-            while (scelta != 3);
+            while (scelta != 5);
 
 
 
