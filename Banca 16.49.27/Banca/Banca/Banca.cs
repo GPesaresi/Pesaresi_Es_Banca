@@ -16,7 +16,7 @@ namespace Banca
         /// <summary>
         /// lista di conti correnti della banca
         /// </summary>
-        private List<ContoCorrente> elencoContiCorrenti = new List<ContoCorrente>();
+        public List<ContoCorrente> elencoContiCorrenti = new List<ContoCorrente>();
 
         /// <summary>
         /// costruttore

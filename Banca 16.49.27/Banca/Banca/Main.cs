@@ -20,7 +20,10 @@ namespace Banca
                 Console.WriteLine("2 -Visualizza il tuo conto corrente");
                 Console.WriteLine("3 -Elimina il tuo conto corrente");
                 Console.WriteLine("4 -Effettua un versamento o un prelievo");
-                Console.WriteLine("5 -Esci");
+                Console.WriteLine("5 -Non ti ricordi il tuo codice iban?");
+                Console.WriteLine("   Consulta una lista di tutti gli iban registrati");
+                Console.WriteLine("");
+                Console.WriteLine("6 -Esci");
                 Console.WriteLine("");
                 scelta = Convert.ToInt16(Console.ReadLine());
                 Console.WriteLine("");
@@ -103,6 +106,7 @@ namespace Banca
 
                                 }
                             } while (scelta1 != "c");
+                            Console.Clear();
 
                             break;
 
@@ -121,6 +125,7 @@ namespace Banca
                             Console.WriteLine("Il saldo attuale è di: " + BCC.GetContocorrente(iban).Saldo());
                             Console.WriteLine("");
                         }
+                        Console.Clear();
                         break;
 
                     case 3:
@@ -155,6 +160,7 @@ namespace Banca
 
 
                         }
+                        Console.Clear();
                         break;
 
                     case 4:
@@ -173,12 +179,12 @@ namespace Banca
                                 if (scelta2 == "c")
                                 { }
                                 else
-                                        {
-                                            Console.WriteLine("Immetti il tuo codice iban:");
-                                            iban = Console.ReadLine();
-                                        Console.WriteLine("");
-                                        }
-                                
+                                {
+                                    Console.WriteLine("Immetti il tuo codice iban:");
+                                    iban = Console.ReadLine();
+                                    Console.WriteLine("");
+                                }
+
 
                                 switch (scelta2)
                                 {
@@ -214,50 +220,39 @@ namespace Banca
                                 }
                             } while (scelta2 != "c");
                         }
+                        Console.Clear();
                         break;
+
+                    case 5:
+                        {
+                            string scelta3 = "";
+                            foreach (ContoCorrente conto in BCC.elencoContiCorrenti)
+                            {
+                                Console.WriteLine("Il cliente a cui è associato il seguente codice iban è: " + conto.GetIntestatario().GetNome());
+                                Console.WriteLine(conto.iban);
+                                Console.WriteLine("");
+                            }
+
+                            do
+                            {
+                                Console.WriteLine("Per continuare scriva SI");
+                                scelta3 = Console.ReadLine().ToLower();
+
+                            } while (scelta3 != "si");
+                            Console.Clear();
+                        }
+                        break;
+
+                    case 6: Console.Clear(); break;
                 }
             }
-            while (scelta != 5);
+            while (scelta != 6);
 
 
 
 
 
-            // esempio
-            //var banca = new Banca("Banca dei poveri", "Vicolo stretto"); // deve essere istanziata una sola banca
-            //var cc0 = banca.Add(new ContoCorrente(1000, 0, 50)); // aggiungo un conto corrente
-            //cc0.SetIntestatario(new Intestatario("Pietro Smusi", DateTime.Now, "Piazza della Vittoria", "pietrosmusi89@gmail.com")); // imposto intestatario ad un conto corrente
-            //Console.WriteLine("Saldo corrente " + cc0.Saldo());
-            //cc0.Versamento(100); // faccio un versamento
-            //Console.WriteLine("Versamento di 100 euro... ");
-            //cc0.Prelievo(1000); // prelievo
-            //Console.WriteLine("Prelievo di 1000 euro... ");
-            //var saldo = cc0.Saldo(); // saldo
-            //Console.WriteLine("Saldo corrente " + saldo); // stampa il saldo rimanente
 
-
-            // esempio successivo
-            //var cc1 = banca.Add(new ContoCorrente(1000, 51, 50)); // aggiungo un conto corrente
-            //cc1.SetIntestatario(new Intestatario("Pietro Smusi", DateTime.Now, "Piazza della Vittoria", "pietrosmusi89@gmail.com")); // imposto intestatario ad un conto corrente
-            //Console.WriteLine("\nSaldo corrente " + cc1.Saldo());
-            //cc1.Versamento(100); // faccio un versamento
-            //Console.WriteLine("Versamento di 100 euro... ");
-            //cc1.Prelievo(1000); // prelievo
-            //Console.WriteLine("Prelievo di 1000 euro... ");
-            //Double saldo1 = cc1.Saldo(); // saldo
-            // Console.WriteLine("Saldo corrente " + saldo1); // stampa il saldo rimanente
-
-
-
-            // situazione prima del bonifico 
-            //Console.WriteLine("Saldo conto corrente mittente " + cc0.Saldo().ToString());
-            //Console.WriteLine("Saldo conto corrente destinatario " + cc1.Saldo().ToString());
-            //Console.WriteLine("\nBonifico di 50 euro in corso...\n");
-            //banca.Bonifico(cc0.iban, cc1.iban, 50); // esempio di un bonifico tra due conti correnti
-            // situazione dopo il bonifico
-            //Console.WriteLine("Saldo conto corrente mittente " + cc0.Saldo().ToString());
-            //Console.WriteLine("Saldo conto corrente destinario " + cc1.Saldo().ToString());
-            //Console.ReadKey();
         }
     }
 }
